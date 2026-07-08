@@ -22,7 +22,3 @@ STORE_RAW_EMAILS = "false"
 binding = "DB"
 database_name = "nailmazy"
 database_id = "93aa033d-ed5b-41a5-b788-fc7a8dfa331e"
-
-[[r2_buckets]]
-binding = "MAIL_R2"
-bucket_name = "maail-portal-mail2"
