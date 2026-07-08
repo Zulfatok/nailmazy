@@ -4,7 +4,7 @@
 -- Step 1: Create new aliases table with domain support
 CREATE TABLE IF NOT EXISTS aliases_new (
   local_part TEXT NOT NULL,
-  domain TEXT NOT NULL DEFAULT 'mazayaa.tech',  -- default to primary domain
+  domain TEXT NOT NULL DEFAULT 'nailmazy.org',  -- default to primary domain
   user_id TEXT NOT NULL,
   disabled INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS aliases_new (
 
 -- Step 2: Copy existing data (set domain to mazaya.codes for all existing aliases)
 INSERT INTO aliases_new (local_part, domain, user_id, disabled, created_at)
-SELECT local_part, 'mazayaa.tech', user_id, disabled, created_at
+SELECT local_part, 'nailmazy.org', user_id, disabled, created_at
 FROM aliases;
 
 -- Step 3: Drop old table
@@ -27,7 +27,7 @@ ALTER TABLE aliases_new RENAME TO aliases;
 CREATE TABLE IF NOT EXISTS emails_new (
   id TEXT PRIMARY KEY,
   local_part TEXT NOT NULL,
-  domain TEXT NOT NULL DEFAULT 'mazayaa.tech',
+  domain TEXT NOT NULL DEFAULT 'nailmazy.org',
   user_id TEXT NOT NULL,
   from_addr TEXT NOT NULL,
   to_addr TEXT NOT NULL,
@@ -50,9 +50,9 @@ SELECT
   COALESCE(
     CASE 
       WHEN to_addr LIKE '%@%' THEN LOWER(SUBSTR(to_addr, INSTR(to_addr, '@') + 1))
-      ELSE 'mazayaa.tech' 
+      ELSE 'nailmazy.org' 
     END,
-    'mazayaa.tech'
+    'nailmazy.org'
   ) as domain,
   user_id, 
   from_addr, 
@@ -75,5 +75,3 @@ ALTER TABLE emails_new RENAME TO emails;
 -- Step 9: Recreate indexes
 CREATE INDEX IF NOT EXISTS idx_emails_user_created ON emails(user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_emails_alias_created ON emails(local_part, created_at DESC);
-
-
